@@ -15,5 +15,3 @@ for (f in c("1", "2", "3", "S1", "S2")) {
 ```
 
 To refit models from the trade data, run `source("code/GLMM_analysis.R")` before drawing Figures 2-3; this replaces the saved models. To rebuild S2 from source rasters, run `Rscript code/Figure_S2.R --recalculate` in a terminal.
-
-Figures 1-3 and S1 use Times New Roman (`serif`); S2 uses Arial.
