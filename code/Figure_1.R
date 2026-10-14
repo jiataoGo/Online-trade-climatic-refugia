@@ -19,14 +19,12 @@ glimpse(df)
 df$sale_form <- factor(df$propagule_type, levels = c("seed", "adult"))
 df$year_label <- factor(df$year_label)
 df$is_refugia_label <- ifelse(df$is_refugia == 1, "Refugia", "In-niche")
-df$prop_label <- ifelse(df$sale_form == "seed", "Seed", "Live")
+df$prop_label <- ifelse(df$sale_form == "seed", "Seeds", "Live plants")
 
 # 3. Load Maps
-world_shp <- st_read("./data/worldmap/World_Land_Clean.shp", quiet = TRUE)
 china_shp <- st_read("./data/China_map/bou2_4p.shp", quiet = TRUE)
 south_sea_shp <- st_read("./data/China_map/south_sea.shp", quiet = TRUE)
 
-if (is.na(st_crs(world_shp))) st_crs(world_shp) <- 4326
 if (is.na(st_crs(china_shp))) st_crs(china_shp) <- 4326
 if (is.na(st_crs(south_sea_shp))) st_crs(south_sea_shp) <- 4326
 
@@ -53,13 +51,12 @@ annot_stats <- df %>%
     .groups = "drop"
   )
 
-df_agg$prop_label <- factor(df_agg$prop_label, levels = c("Seed", "Live"))
-annot_stats$prop_label <- factor(annot_stats$prop_label, levels = c("Seed", "Live"))
+df_agg$prop_label <- factor(df_agg$prop_label, levels = c("Seeds", "Live plants"))
+annot_stats$prop_label <- factor(annot_stats$prop_label, levels = c("Seeds", "Live plants"))
 df_agg <- df_agg %>% arrange(factor(is_refugia_label, levels = c("Refugia", "In-niche")))
 
 # 7. Create Main Map
 p_main <- ggplot() +
-  geom_sf(data = world_shp, fill = "#F8F9F9", color = "#D0D3D4", linewidth = 0.1) +
   geom_sf(data = china_shp, fill = "white", color = "#566573", linewidth = 0.3) +
   geom_sf(data = south_sea_shp, color = "#566573", linewidth = 0.3) +
   geom_sf(data = df_agg, aes(size = n_species, fill = is_refugia_label),
@@ -73,12 +70,14 @@ p_main <- ggplot() +
   facet_grid(year_label ~ prop_label) +
   theme_bw() +
   theme(
-    text = element_text(family = "serif", size = 14),
-    axis.title = element_text(size = 14),
-    axis.text = element_text(size = 14, color = "black"),
-    strip.text = element_text(size = 14),
+    text = element_text(family = "serif", size = 16),
+    axis.title = element_text(size = 16),
+    axis.text = element_text(size = 16, color = "black"),
+    strip.text = element_text(size = 16),
     strip.background = element_rect(fill = "gray95", color = "black", linewidth = 0.5),
     legend.position = c(0.56, 0.15),
+    legend.title = element_text(size = 16),
+    legend.text = element_text(size = 14),
     legend.background = element_rect(fill = "transparent", colour = NA),
     legend.key = element_rect(fill = "transparent", colour = NA),
     panel.grid = element_blank(),
@@ -89,18 +88,16 @@ p_main <- ggplot() +
 # Add stats to main map
 p_main <- p_main +
   geom_text(data = annot_stats,
-            aes(x = 75, y = 50,
-                label = paste0("Nurseries: ", total_stores, "\n",
-                             "Taxa: ", n_species, "\n",
-                             "Refugia ratio: ", refugia_pct, "%")),
-            hjust = 0, size = 4, family = "serif")
+            aes(x = 75, y = 53,
+                label = paste0("Stores: ", total_stores, "; Taxa: ", n_species, "\n",
+                             "Stores with refugium records: ", refugia_pct, "%")),
+            hjust = 0, vjust = 1, size = 4.8, family = "serif")
 
 
 
 # 8. Create South Sea Inset Map
 cat("Creating South Sea inset...\n")
 p_inset <- ggplot() +
-  geom_sf(data = world_shp, fill = "#F8F9F9", color = "#D0D3D4", linewidth = 0.1) +
   geom_sf(data = china_shp, fill = "white", color = "#566573", linewidth = 0.3) +
   geom_sf(data = south_sea_shp, color = "#566573", linewidth = 0.3) +
   coord_sf(xlim = c(106, 122), ylim = c(3, 25)) +

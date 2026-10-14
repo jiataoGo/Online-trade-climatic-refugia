@@ -128,7 +128,7 @@ if (config$recalculate) {
     stop("Some requested combined TIFFs are missing; inspect missing_species.csv.")
   }
 
-  # 4. Calculate geographic cell areas in km².
+  # 4. Calculate geographic cell areas in square kilometres.
   template <- terra::rast(species$source_path[1])
   if (!isTRUE(terra::nlyr(template) == 1L && terra::is.lonlat(template))) {
     stop("The template must be a single-layer longitude/latitude raster.")
@@ -478,8 +478,8 @@ for (class_index in seq_along(classes)) {
     } else {
       map_plot <- map_plot + coord_fixed(ratio = 1 / cos(35.5 * pi / 180),
             xlim = config$main_xlim, ylim = config$main_ylim, expand = FALSE) +
-        scale_x_continuous(breaks = c(80, 100, 120), labels = paste0(c(80, 100, 120), "°E")) +
-        scale_y_continuous(breaks = c(20, 35, 50), labels = paste0(c(20, 35, 50), "°N")) +
+        scale_x_continuous(breaks = c(80, 100, 120), labels = paste0(c(80, 100, 120), "\u00B0E")) +
+        scale_y_continuous(breaks = c(20, 35, 50), labels = paste0(c(20, 35, 50), "\u00B0N")) +
         publication_theme +
         theme(legend.position = "bottom", axis.line = element_blank(),
           panel.border = element_rect(fill = NA, colour = "#AEB5B5", linewidth = .3))
@@ -508,7 +508,7 @@ mean_area <- ggplot(area_summary, aes(x = invasion_label,
   scale_x_discrete(labels = area_labels) +
   scale_y_continuous(limits = config$area_xlim, breaks = seq(0, 2, .5), expand = c(0, 0)) +
   labs(tag = "D", x = NULL,
-       y = "Mean suitable area per taxon (10⁶ km²)") +
+       y = "Mean suitable area per taxon (10\u2076 km\u00B2)") +
   publication_theme +
   theme(axis.ticks.x = element_blank(),
         axis.text.x = element_text(size = 9 * font_scale, lineheight = 1.05),

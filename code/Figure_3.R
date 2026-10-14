@@ -93,7 +93,7 @@ dat_c1_lat$group <- factor(dat_c1_lat$group,
 p1 <- plot(dat_c1_lat,
            line_size = 1) +
   labs(title = "Latitude \u00D7 Naturalization: ***",
-       y = "Proportion of\nrefugium records (%)", x = "Latitude (\u00B0; scaled)",
+       y = "Proportion of\nrefugium records (%)", x = "Standardized latitude",
        color = "Naturalization status", fill = "Naturalization status") +
   scale_color_aaas() +
   scale_fill_aaas() +
@@ -114,7 +114,7 @@ dat_c1_lng$group <- factor(dat_c1_lng$group,
 p2 <- plot(dat_c1_lng,
            line_size = 1) +
   labs(title = "Longitude \u00D7 Naturalization: ***",
-       y = "Proportion of\nrefugium records (%)", x = "Longitude (\u00B0; scaled)",
+       y = "Proportion of\nrefugium records (%)", x = "Standardized longitude",
        color = "Naturalization status", fill = "Naturalization status") +
   scale_color_aaas() +
   scale_fill_aaas() +
@@ -133,7 +133,7 @@ dat_c2_lat$group <- as.factor(dat_c2_lat$group)
 
 p3 <- plot(dat_c2_lat, line_size = 1) +
   labs(title = "Latitude \u00D7 Invasiveness: ***",
-       y = "Proportion of\nrefugium records (%)", x = "Latitude (\u00B0; scaled)",
+       y = "Proportion of\nrefugium records (%)", x = "Standardized latitude",
        color = "Invasiveness status", fill = "Invasiveness status") +
   scale_color_aaas(labels = c("-0.5" = "Non-invasive", "0.5" = "Invasive")) +
   scale_fill_aaas(labels = c("-0.5" = "Non-invasive", "0.5" = "Invasive")) +
@@ -147,7 +147,7 @@ dat_prop_lat$group <- factor(dat_prop_lat$group,
 
 p4 <- plot(dat_prop_lat, line_size = 1) +
   labs(title = "Latitude \u00D7 Sale form: ***",
-       y = "Proportion of\nrefugium records (%)", x = "Latitude (\u00B0; scaled)",
+       y = "Proportion of\nrefugium records (%)", x = "Standardized latitude",
        color = "Sale form", fill = "Sale form") +
   scale_color_aaas() +
   scale_fill_aaas() +

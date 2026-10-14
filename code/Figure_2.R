@@ -141,7 +141,7 @@ p10 <- plot(dat_m5) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
               fill = aaas_blue, alpha = 0.15) +
   labs(title = "Latitude: ***",
-       x = "Latitude (\u00B0; scaled)",
+       x = "Standardized latitude",
        y = "Proportion of\nrefugium records (%)") +
   scale_y_continuous(labels = function(x) x * 100, limits = c(0, 1)) +
   my_main_theme
@@ -152,7 +152,7 @@ p11 <- plot(dat_m6) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
               fill = aaas_blue, alpha = 0.15) +
   labs(title = "Longitude: ***",
-       x = "Longitude (\u00B0; scaled)",
+       x = "Standardized longitude",
        y = "Proportion of\nrefugium records (%)") +
   scale_y_continuous(labels = function(x) x * 100, limits = c(0, 1)) +
   my_main_theme
