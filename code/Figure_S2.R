@@ -29,8 +29,8 @@ CONFIG <- list(
   figure_width_mm = 240,
   figure_height_mm = 205,
   dpi = 600,
-  font_family = "Arial",
-  base_font_size = 12,
+  font_family = "serif",
+  base_font_size = 16,
   zero_grey = "#C9C9C9",
   nodata_grey = "#E9E9E9",
   richness_palette = c("#E0F1DA", "#B7DFAB", "#78C679", "#31A354", "#08783E", "#004D2A"),
@@ -417,7 +417,7 @@ publication_theme <- theme_classic(base_size = config$base_font_size, base_famil
     axis.ticks.length = grid::unit(1.2, "mm"),
     plot.title = element_text(size = 10.5 * font_scale, face = "plain", hjust = .5),
     plot.subtitle = element_text(size = 9.5 * font_scale, hjust = .5),
-    plot.tag = element_text(size = 13 * font_scale, face = "plain"),
+    plot.tag = element_text(size = 16, face = "plain"),
     plot.tag.position = "topleft",
     legend.title = element_text(size = 10 * font_scale),
     legend.text = element_text(size = 9 * font_scale),
@@ -456,7 +456,7 @@ for (class_index in seq_along(classes)) {
         breaks = c(1, 50, 100, 150, 200, 250, common_max),
         name = "Predicted taxon richness", na.value = "transparent",
         guide = if (inset) "none" else guide_colourbar(title.position = "top",
-          title.hjust = .5, barwidth = grid::unit(85, "mm"),
+          title.hjust = .5, barwidth = grid::unit(125, "mm"),
           barheight = grid::unit(3.5, "mm"), ticks.colour = "white")) +
       geom_polygon(data = outside_path, aes(X, Y, group = group, subgroup = subgroup),
         rule = "evenodd", fill = "white", colour = NA) +
@@ -498,7 +498,7 @@ for (class_index in seq_along(classes)) {
 # 6. Plot mean suitable area.
 area_summary$invasion_label <- factor(area_summary$invasion_label, levels = classes)
 area_labels <- c(inv = "Invasive", nat = "Naturalized\nnon-invasive",
-                 nonnat = "Non-naturalized")
+                 nonnat = "Non-\nnaturalized")
 mean_area <- ggplot(area_summary, aes(x = invasion_label,
                            y = mean_species_area_km2 / 1e6, fill = invasion_label)) +
   geom_col(width = .58, show.legend = FALSE) +
@@ -508,7 +508,7 @@ mean_area <- ggplot(area_summary, aes(x = invasion_label,
   scale_x_discrete(labels = area_labels) +
   scale_y_continuous(limits = config$area_xlim, breaks = seq(0, 2, .5), expand = c(0, 0)) +
   labs(tag = "D", x = NULL,
-       y = "Mean suitable area per taxon (10\u2076 km\u00B2)") +
+       y = "Mean suitable area per taxon\n(10\u2076 km\u00B2)") +
   publication_theme +
   theme(axis.ticks.x = element_blank(),
         axis.text.x = element_text(size = 9 * font_scale, lineheight = 1.05),
@@ -516,7 +516,7 @@ mean_area <- ggplot(area_summary, aes(x = invasion_label,
 # 7. Arrange panels with the shared legend above.
 figure <- wrap_plots(maps[[1]], maps[[2]], maps[[3]],
                     wrap_elements(full = mean_area), guide_area(),
-                    design = "EE\nAB\nCD", heights = c(.20, 1, 1), guides = "collect") &
+                    design = "EE\nAB\nCD", heights = c(.34, 1, 1), guides = "collect") &
   theme(legend.position = "top")
 # 8. Export PNG (600 dpi) and PDF.
 dir.create(dirname(config$png_file), recursive = TRUE, showWarnings = FALSE)

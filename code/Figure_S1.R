@@ -65,19 +65,19 @@ if (file.exists(previous_file)) {
 npg <- (ggsci::pal_npg("nrc"))(10)
 form_colours <- c(`Seed only` = npg[2], `Live plant only` = npg[3], Both = npg[5],
   Unclassified = "#BDBDBD")
-my_theme <- theme_classic(base_size = 16, base_family = "serif") + theme(text = element_text(face = "plain"),
+my_theme <- theme_classic(base_size = 18, base_family = "serif") + theme(text = element_text(face = "plain"),
   strip.background = element_blank(), strip.text = element_text(face = "plain",
-    size = 16), axis.text = element_text(colour = "black", size = 14), legend.text = element_text(size = 14),
+    size = 18), axis.text = element_text(colour = "black", size = 16), legend.text = element_text(size = 16),
   legend.position = "bottom", legend.title = element_blank(), plot.margin = margin(10,
     10, 10, 10))
 
 # 6. Draw the figure -----------------------------------
 p_forms <- ggplot(form_summary, aes(year, proportion, fill = sale_category)) +
   geom_col(width = 0.62, colour = "white", linewidth = 0.4, position = position_stack(reverse = TRUE)) +
-  geom_text(aes(label = label), size = 4.5, family = "serif", lineheight = 1,
+  geom_text(aes(label = label), size = 5.2, family = "serif", lineheight = 1,
     position = position_stack(vjust = 0.5, reverse = TRUE)) + geom_text(data = species_totals,
   aes(x = year, y = 1.055, label = paste0("N = ", n_species)), inherit.aes = FALSE,
-  size = 4.5, family = "serif") + scale_fill_manual(values = form_colours) +
+  size = 5.2, family = "serif") + scale_fill_manual(values = form_colours) +
   scale_y_continuous(labels = scales::label_number(scale = 100), breaks = seq(0,
     1, 0.25), limits = c(0, 1.11), expand = c(0, 0)) + facet_wrap(~invasion_status,
   nrow = 1) + labs(x = NULL, y = "Taxa (%)") + my_theme
